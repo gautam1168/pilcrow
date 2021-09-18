@@ -14,7 +14,7 @@ in the root directory.
 
 Finally you can start the webapp by running
 ```
-cd www
+cd webapp
 npm i
 npm start
 ```
