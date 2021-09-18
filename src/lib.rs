@@ -61,3 +61,8 @@ pub fn drawSmiley() {
 
     context.stroke();
 }
+
+
+// Parse QML
+// Canvas renderer
+// Framebuffer renderer
