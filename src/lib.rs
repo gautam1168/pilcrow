@@ -29,12 +29,20 @@ pub fn drawSmiley() {
         .map_err(|_| ())
         .unwrap();
 
+    let normal = document.get_element_by_id("pressed").unwrap();
+    let normal: web_sys::HtmlImageElement = normal
+        .dyn_into::<web_sys::HtmlImageElement>()
+        .map_err(|_| ())
+        .unwrap();
+
     let context = canvas
         .get_context("2d")
         .unwrap()
         .unwrap()
         .dyn_into::<web_sys::CanvasRenderingContext2d>()
         .unwrap();
+
+    context.draw_image_with_html_image_element(&normal, 0.0, 0.0);
 
     context.begin_path();
 
