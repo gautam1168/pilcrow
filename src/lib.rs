@@ -3,6 +3,8 @@ mod utils;
 use std::f64;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
+use std::rc::Rc;
+use std::cell::Cell;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -29,12 +31,6 @@ pub fn drawSmiley() {
         .map_err(|_| ())
         .unwrap();
 
-    let normal = document.get_element_by_id("pressed").unwrap();
-    let normal: web_sys::HtmlImageElement = normal
-        .dyn_into::<web_sys::HtmlImageElement>()
-        .map_err(|_| ())
-        .unwrap();
-
     let context = canvas
         .get_context("2d")
         .unwrap()
@@ -42,6 +38,47 @@ pub fn drawSmiley() {
         .dyn_into::<web_sys::CanvasRenderingContext2d>()
         .unwrap();
 
+    let context = Rc::new(context);
+    let pressed = Rc::new(Cell::new(false));
+    {
+        let pressed = pressed.clone();
+        let context = context.clone();
+        let closure = Closure::wrap(Box::new(move |event: web_sys::MouseEvent| {
+            pressed.set(true);
+            let document = web_sys::window().unwrap().document().unwrap();
+            let normal = document.get_element_by_id("pressed").unwrap();
+            let normal: web_sys::HtmlImageElement = normal
+                .dyn_into::<web_sys::HtmlImageElement>()
+                .map_err(|_| ())
+                .unwrap();
+            context.draw_image_with_html_image_element(&normal, 0.0, 0.0);
+        }) as Box<dyn FnMut(_)>);
+        canvas.add_event_listener_with_callback("mousedown", closure.as_ref().unchecked_ref()).unwrap();
+        closure.forget();
+    }
+
+    {
+        let pressed = pressed.clone();
+        let context = context.clone();
+        let closure = Closure::wrap(Box::new(move |event: web_sys::MouseEvent| {
+            pressed.set(false);
+            let document = web_sys::window().unwrap().document().unwrap();
+            let normal = document.get_element_by_id("normal").unwrap();
+            let normal: web_sys::HtmlImageElement = normal
+                .dyn_into::<web_sys::HtmlImageElement>()
+                .map_err(|_| ())
+                .unwrap();
+            context.draw_image_with_html_image_element(&normal, 0.0, 0.0);
+        }) as Box<dyn FnMut(_)>);
+        canvas.add_event_listener_with_callback("mouseup", closure.as_ref().unchecked_ref()).unwrap();
+        closure.forget();
+    }
+
+    let normal = document.get_element_by_id("pressed").unwrap();
+    let normal: web_sys::HtmlImageElement = normal
+        .dyn_into::<web_sys::HtmlImageElement>()
+        .map_err(|_| ())
+        .unwrap();
     context.draw_image_with_html_image_element(&normal, 0.0, 0.0);
 
     context.begin_path();

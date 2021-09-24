@@ -36,6 +36,7 @@ features = [
   'HtmlCanvasElement',
   'HtmlImageElement',
   'Window',
+  'MouseEvent'
 ]
 
 [dev-dependencies]
