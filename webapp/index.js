@@ -3,6 +3,7 @@ import * as pilcrow from "pilcrow";
 const el = document.getElementById("canvas");
 if (el) {
   pilcrow.drawSmiley();
+  // pilcrow.run();
 } else {
   pilcrow.greet();
 }

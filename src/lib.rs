@@ -41,26 +41,31 @@ struct ButtonWindow {
 }
 
 impl ButtonWindow {
-    pub fn start(&self) {
-        self.painter.paint(self);
-    }
-
     pub fn setState(&mut self, val: String) {
         self.state = val;
-        self.painter.paint(self);
+        // self.painter.paint(&self);
     }
 }
 
 // generated
 fn init() -> ButtonWindow {
+    // Make painter
     let document = web_sys::window().unwrap().document().unwrap();
-    let normal = document.get_element_by_id("pressed").unwrap();
+    let normal = document.get_element_by_id("normal").unwrap();
     let normal: web_sys::HtmlImageElement = normal
         .dyn_into::<web_sys::HtmlImageElement>()
         .map_err(|_| ())
         .unwrap();
 
+    let pressed = document.get_element_by_id("pressed").unwrap();
+    let pressed: web_sys::HtmlImageElement = pressed
+        .dyn_into::<web_sys::HtmlImageElement>()
+        .map_err(|_| ())
+        .unwrap();
+
     let painter = Painter::new(String::from("canvas"));
+
+    // Make window
     let win = ButtonWindow {
         state: String::from("fdlsa"),
         states: [
@@ -69,7 +74,7 @@ fn init() -> ButtonWindow {
                 name: String::from("fdsl")
             },
             State {
-                image: normal,
+                image: pressed,
                 name: String::from("fdsl")
             }
         ],
@@ -94,11 +99,11 @@ struct Painter {
 }
 
 impl Painter {
-    pub fn paint(&self, win: ButtonWindow) {
+    pub fn paint(&self, win: &ButtonWindow) {
         // Find current state
-        let image = win.states[0].image;
+        let image = &win.states[0].image;
         // Paint it
-        self.context.draw_image_with_html_image_element(&image, 0.0, 0.0);
+        self.context.draw_image_with_html_image_element(image, 0.0, 0.0);
     }
 
     pub fn new(canvas_id: String) -> Painter {
@@ -127,6 +132,7 @@ impl Painter {
 #[wasm_bindgen]
 pub fn run() {
     let win = decorated(init());
+    win.painter.paint(&win);
     // win.setPainter(canvasPainter)
 }
 
