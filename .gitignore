@@ -5,3 +5,4 @@ bin/
 pkg/
 wasm-pack.log
 webapp/node_modules
+node_modules

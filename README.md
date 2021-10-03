@@ -1,20 +1,15 @@
-# Installation instructions
+# TypeScript with Webpack starter kit
 
-You need to have rust installed using `rustup`.
-You need to install `wasm-pack`
+This is a very simple starter kit for TypeScript and configured with Webpack.
+
+## Npm Packages
+
+Please run this command on your terminal, it will be install all dependencies:
+
 ```
-cargo install wasm-pack
+npm run install
 ```
 
-After this you can build the rust part using
-```
-wasm-pack build
-```
-in the root directory.
+the packages are:
 
-Finally you can start the webapp by running
-```
-cd webapp
-npm i
-npm start
-```
+awesome-typescript-loader, webpack, webpack-cli, webpack-dev-server, typescript, tslint, tslint-eslint-rules
