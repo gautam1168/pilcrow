@@ -9,7 +9,8 @@ interface Item {
 }
 
 interface App {
-  onButtonClick?: () => void,
+  onButtonPress?: () => void,
+  onButtonRelease?: () => void,
   item: Item,
   canvas?: HTMLCanvasElement,
   context?: CanvasRenderingContext2D,
@@ -64,11 +65,15 @@ const App: App = {
     }, {} as State);
 
     canvas.addEventListener("mousedown", () => {
-      this.item.state = "pressed";
+      if (this.onButtonPress) {
+        this.onButtonPress();
+      }
     });
 
     canvas.addEventListener("mouseup", () => {
-      this.item.state = "normal";
+      if (this.onButtonRelease) {
+        this.onButtonRelease();
+      }
     });
 
     return Promise.all(states.map(it => it.downloaded)).then(() => {});
@@ -89,8 +94,12 @@ function paint(app: App) {
 }
 
 // import App from "./app.pil";
-App.onButtonClick = () => {
-  console.log("Clicked");
+App.onButtonPress = () => {
+  App.item.state = "pressed";
+}
+
+App.onButtonRelease = () => {
+  App.item.state = "normal";
 }
 
 const canvas = document.getElementById("app") as HTMLCanvasElement;
