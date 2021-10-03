@@ -1,13 +1,3 @@
-// const canvas = document.getElementById("app") as HTMLCanvasElement;
-
-// const App = {
-//   mount(canvas: HTMLCanvasElement) {
-//     const ctx = canvas.getContext("2d");
-//     // ctx?.drawImage();
-//   }
-// };
-
-// App.mount(canvas);
 type State = Record<string, {
   url: string, 
   ref?: HTMLImageElement
@@ -28,7 +18,7 @@ interface App {
 
 const App: App = {
   item: new Proxy({
-    state: "pressed",
+    state: "normal",
     states: {
       "pressed": {
         url: "/public/pressed.png"
