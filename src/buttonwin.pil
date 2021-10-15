@@ -1,0 +1,59 @@
+{
+  "Item": {
+    "id": "myButton_Symbol",
+    "width": 211,
+    "height": 211,
+    "state": "normal",
+    "images": [
+      {
+        "id": "myButton_Symbol_normal",
+        "x": 0,
+        "y": 0,
+        "source": "/public/normal.png"
+      },
+      {
+        "id": "myButton_Symbol_pressed",
+        "x": 0,
+        "y": 0,
+        "source": "/public/pressed.png"
+      }
+    ],
+    "mouseArea": {
+      "x": 0,
+      "y": 0,
+      "width": 211,
+      "height": 211,
+      "hoverEnabled": false,
+      "mousedown": true,
+      "mouseup": true
+    },
+    "states": [
+      {
+        "name": "normal",
+        "propertyChanges": [
+          {
+            "target": "myButton_Symbol_normal",
+            "visible": true
+          },
+          {
+            "target": "myButton_Symbol_pressed",
+            "visible": false
+          }
+        ]
+      },
+      {
+        "name": "pressed",
+        "propertyChanges": [
+          {
+            "target": "myButton_Symbol_normal",
+            "visible": false
+          },
+          {
+            "target": "myButton_Symbol_pressed",
+            "visible": true
+          }
+        ]
+      }
+    ]
+  }
+}

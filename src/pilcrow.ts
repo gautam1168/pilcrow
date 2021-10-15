@@ -18,25 +18,28 @@ interface App {
 };
 
 export const App: App = {
-  item: new Proxy({
-    state: "normal",
-    states: {
-      "pressed": {
-        url: "/public/pressed.png"
-      },
-      "normal": {
-        url: "/public/normal.png"
+  item: new Proxy(
+    {
+      state: "normal",
+      states: {
+        "pressed": {
+          url: "/public/pressed.png"
+        },
+        "normal": {
+          url: "/public/normal.png"
+        }
+      }
+    }, 
+    {
+      set(target: Item, prop: string, value: keyof Pick<Item, "states">) {
+        (target as any)[prop] = value;
+        if (prop === "state") {
+          paint(App);
+        }
+        return true;
       }
     }
-  }, {
-    set(target: Item, prop: string, value: keyof Pick<Item, "states">) {
-      (target as any)[prop] = value;
-      if (prop === "state") {
-        paint(App);
-      }
-      return true;
-    }
-  }),
+  ),
   mount(canvas) {
     this.canvas = canvas;
     const context = canvas.getContext("2d");
