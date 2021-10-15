@@ -73,7 +73,7 @@ module.exports = function (source) {
       const context = app.context;
       const images = item.images.filter(image => image.visible);
       for (let image of images) {
-        context.drawImage(image.ref, 0, 0);
+        context.drawImage(image.ref, image.x, image.y, item.width, item.height);
       }
 
       let mouseArea = app.item.mouseArea;
