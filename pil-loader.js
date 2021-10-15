@@ -75,6 +75,13 @@ module.exports = function (source) {
       for (let image of images) {
         context.drawImage(image.ref, 0, 0);
       }
+
+      let mouseArea = app.item.mouseArea;
+      if (mouseArea && mouseArea.draw) {
+        context.strokeStyle = "#FF0000";
+        context.rect(mouseArea.x, mouseArea.y, mouseArea.width, mouseArea.height);
+        context.stroke();
+      }
     }
   `;
 }
