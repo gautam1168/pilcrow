@@ -1,5 +1,5 @@
 // import { App, paint } from "./pilcrow";
-import { newApp, paint } from "./buttonwin.pil";
+import { newApp } from "./buttonwin.pil";
 
 // console.log("imported: ", newApp);
 newApp.onButtonPress = () => {
@@ -14,7 +14,7 @@ newApp.onButtonRelease = () => {
 
 const canvas = document.getElementById("app") as HTMLCanvasElement;
 newApp.mount(canvas).then(() => {
-  paint(newApp);
+  newApp.paint();
 });
 
 // import parser from "./parser";
