@@ -8,7 +8,7 @@ newApp.onButtonRelease = () => {
   newApp.setState("normal");
 }
 
-const canvas = document.getElementById("app") as HTMLCanvasElement;
+const canvas = document.getElementById("app");
 newApp.mount(canvas).then(() => {
   newApp.paint();
 });
